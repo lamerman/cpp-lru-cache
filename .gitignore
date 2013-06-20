@@ -1,13 +1,10 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+CMakeCache.txt
+CMakeFiles
+Makefile
+install_manifest.txt
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
+nbproject
+build
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+cpp-lru-cache-test
+obj-x86_64-linux-gnu/
