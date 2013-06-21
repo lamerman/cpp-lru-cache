@@ -65,6 +65,14 @@ int main(int argc, char *argv[])
 		assert(cache.exists("four"));
 		
 		assert(cache.get("four") == "four");
+		
+		bool error_caught = false;
+		try{
+			cache.get("one");
+		} catch (std::range_error& e) {
+			error_caught = true;
+		}
+		assert(error_caught);
 	}
 	
 	
