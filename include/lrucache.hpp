@@ -49,7 +49,7 @@ public:
 			throw std::range_error("There is no such key in cache");
 		} else {
 			_cache_items_list.splice(_cache_items_list.begin(), _cache_items_list, it->second);
-			return it->second->second;
+			return it->second;
 		}
 	}
 	
