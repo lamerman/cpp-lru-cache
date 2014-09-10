@@ -49,6 +49,8 @@ public:
 			throw std::range_error("There is no such key in cache");
 		} else {
 			_cache_items_list.splice(_cache_items_list.begin(), _cache_items_list, it->second);
+			// Should not the iterator in the map be updated as well?
+			// _cache_items_map.find[key] = _cache_items_list.begin();
 			return it->second->second;
 		}
 	}
