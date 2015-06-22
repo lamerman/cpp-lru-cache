@@ -4,22 +4,32 @@ PROJECT(CPP-LRU_CACHE)
 
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-INCLUDE_DIRECTORIES(
-	${PROJECT_SOURCE_DIR}/include)
+# Build examples by default:
+OPTION(BUILD_EXAMPLES "Build cpp-lru-cache examples." ON)
 
-LINK_DIRECTORIES()
+IF(BUILD_EXAMPLES)
+    INCLUDE_DIRECTORIES(
+	   ${PROJECT_SOURCE_DIR}/include)
 
-ADD_EXECUTABLE(cpp-lru-cache-test
-	src/test)
+    LINK_DIRECTORIES()
 
-TARGET_LINK_LIBRARIES(cpp-lru-cache-test)
+    ADD_EXECUTABLE(cpp-lru-cache-test
+        src/test)
 
-SET_TARGET_PROPERTIES(cpp-lru-cache-test PROPERTIES
-	PREFIX ""
-	SUFFIX ""
-	COMPILE_FLAGS "-std=c++0x -W -Wall -pedantic")
+    TARGET_LINK_LIBRARIES(cpp-lru-cache-test)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
-set(CMAKE_CSS_FLAGS_RELEASE "-03 -g")
+    SET_TARGET_PROPERTIES(cpp-lru-cache-test PROPERTIES
+        PREFIX ""
+        SUFFIX ""
+        COMPILE_FLAGS "-std=c++0x -W -Wall -pedantic")
 
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
+    set(CMAKE_CSS_FLAGS_RELEASE "-03 -g")
+ENDIF(BUILD_EXAMPLES)
 
+# Add an interface library if cmake is version 3.1 or newer
+IF(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 3.1)
+  ADD_LIBRARY(cpp-lru-cache INTERFACE)
+  TARGET_INCLUDE_DIRECTORIES(cpp-lru-cache INTERFACE ${PROJECT_SOURCE_DIR}/include)
+  TARGET_SOURCES(cpp-lru-cache INTERFACE ${PROJECT_SOURCE_DIR}/include/lrucache.hpp)
+ENDIF(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 3.1)
