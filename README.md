@@ -18,3 +18,12 @@ cache.put("two", "two");
 const std::string& from_cache = cache.get("two")
 
 ```
+
+How to run tests:
+
+```
+mkdir build
+cd build
+cmake ..
+make check
+```
