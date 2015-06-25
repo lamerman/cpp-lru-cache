@@ -1,80 +1,45 @@
-#include <lrucache.hpp>
-#include <stdio.h>
-#include <iostream>
-#include <assert.h>
- 
-const int NUM_OF_TEST1_RECORDS = 1000000;
-const int NUM_OF_TEST2_RECORDS = 1000000;
-const int TEST2_CACHE_CAPACITY = 50000;
+#include "lrucache.hpp"
+#include "gtest/gtest.h"
 
-int main(int argc, char *argv[])
-{
-	{
-		cache::lru_cache<int, int> cache(NUM_OF_TEST1_RECORDS);
+const int NUM_OF_TEST1_RECORDS = 100;
+const int NUM_OF_TEST2_RECORDS = 100;
+const int TEST2_CACHE_CAPACITY = 50;
 
-		for (int i = 0; i < NUM_OF_TEST1_RECORDS; ++i) {
-			cache.put(i, i);
-		}
+TEST(CacheTest, SimplePut) {
+    cache::lru_cache<int, int> cache(1);
+    cache.put(7, 777);
+    EXPECT_TRUE(cache.exists(7));
+    EXPECT_EQ(777, cache.get(7));
+    EXPECT_EQ(1, cache.size());
+}
 
-		for (int i = 0; i < NUM_OF_TEST1_RECORDS; ++i) {
-			if (!cache.exists(i)) assert(false);
-			assert(cache.get(i) == i);
-		}
+TEST(CacheTest, MissingValue) {
+    cache::lru_cache<int, int> cache(1);
+    EXPECT_THROW(cache.get(7), std::range_error);
+}
 
-		size_t size = cache.size();
-		assert(size == NUM_OF_TEST1_RECORDS);
-	}
-	
-	{
-		cache::lru_cache<int, int> cache(TEST2_CACHE_CAPACITY);
+TEST(CacheTest1, KeepsAllValuesWithinCapacity) {
+    cache::lru_cache<int, int> cache(TEST2_CACHE_CAPACITY);
 
-		for (int i = 0; i < NUM_OF_TEST2_RECORDS; ++i) {
-			cache.put(i, i);
-		}
+    for (int i = 0; i < NUM_OF_TEST2_RECORDS; ++i) {
+        cache.put(i, i);
+    }
 
-		for (int i = 0; i < NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; ++i) {
-			if (cache.exists(i)) assert(false);
-		}
-		
-		for (int i = NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; i < NUM_OF_TEST2_RECORDS; ++i) {
-			if (!cache.exists(i)) assert(false);
-			assert(cache.get(i) == i);
-		}
+    for (int i = 0; i < NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; ++i) {
+        EXPECT_FALSE(cache.exists(i));
+    }
 
-		size_t size = cache.size();
-		assert(size == TEST2_CACHE_CAPACITY);
-	}
-	
-	{
-		cache::lru_cache<std::string, std::string> cache(3);
-		cache.put("one", "one");
-		cache.put("two", "two");
-		cache.put("three", "three");
-		
-		assert(cache.exists("one"));
-		assert(cache.exists("two"));
-		assert(cache.exists("three"));
-		
-		assert(cache.get("one") == "one");
-		assert(cache.get("two") == "two");
-		assert(cache.get("three") == "three");
-		
-		cache.put("four", "four");
-		assert(cache.exists("two"));
-		assert(cache.exists("three"));
-		assert(cache.exists("four"));
-		
-		assert(cache.get("four") == "four");
-		
-		bool error_caught = false;
-		try{
-			cache.get("one");
-		} catch (std::range_error& e) {
-			error_caught = true;
-		}
-		assert(error_caught);
-	}
-	
-	
-	return 0;
+    for (int i = NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; i < NUM_OF_TEST2_RECORDS; ++i) {
+        EXPECT_TRUE(cache.exists(i));
+        EXPECT_EQ(i, cache.get(i));
+    }
+
+    size_t size = cache.size();
+    EXPECT_EQ(TEST2_CACHE_CAPACITY, size);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    int ret = RUN_ALL_TESTS();
+    return ret;
 }
