@@ -15,6 +15,9 @@ cache::lru_cache<std::string, std::string> cache(3);
 cache.put("one", "one");
 cache.put("two", "two");
 
+cache.exists("one");   //Returns true
+cache.exists("three"); //Returns false
+
 const std::string& from_cache = cache.get("two")
 
 ```
