@@ -12,6 +12,7 @@
 #include <list>
 #include <cstddef>
 #include <stdexcept>
+#include <functional>
 
 namespace cache {
 
