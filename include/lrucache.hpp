@@ -15,11 +15,10 @@
 
 namespace cache {
 
-template<typename key_t,
-	typename value_t,
-	class _Hasher = hash<_Kty>,
-	class _Keyeq = equal_to<_Kty>
->
+template<class key_t,
+		 class value_t,
+	 	 class _Hasher = std::hash<key_t>,
+		 class _Keyeq = std::equal_to< key_t> >
 class lru_cache {
 public:
 	typedef typename std::pair<key_t, value_t> key_value_pair_t;
