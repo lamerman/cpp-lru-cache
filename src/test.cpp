@@ -5,28 +5,27 @@
 #endif
 #include <functional>
 
-const int NUM_OF_TEST1_RECORDS = 100;
-const int NUM_OF_TEST2_RECORDS = 100;
+const int NUM_OF_TEST_RECORDS = 100;
 const int TEST2_CACHE_CAPACITY = 50;
 
 
-typedef struct MyKeyPair { uint64_t MyPartialKeyA; int MyPartialKeyB; } MyKeyPair;
+struct MyKeyPair { uint64_t partial_key_a; int partial_key_b; };
 typedef double MyValue;
 
 struct MyKeyPairMapper {
 	template <typename TSeed>
-	inline void HashCombine(TSeed value, TSeed *seed) const	{
+	inline void HashCombine(TSeed value, TSeed *seed) const {
 		*seed ^= value + 0x9e3779b9 + (*seed << 6) + (*seed >> 2);
 	}
-	inline size_t operator()(const MyKeyPair& p) const	{
-		size_t hash = std::hash<uint64_t>()(p.MyPartialKeyA);
-		size_t hash_2 = std::hash<int>()(p.MyPartialKeyB);
+	inline size_t operator()(const MyKeyPair& p) const {
+		size_t hash = std::hash<uint64_t>()(p.partial_key_a);
+		size_t hash_2 = std::hash<int>()(p.partial_key_b);
 
 		HashCombine<size_t>(hash_2, &hash);
 		return hash;
 	}
-	inline bool operator()(const MyKeyPair &p, const MyKeyPair &q) const	{
-		return p.MyPartialKeyA == q.MyPartialKeyA && p.MyPartialKeyB == q.MyPartialKeyB;
+	inline bool operator()(const MyKeyPair &p, const MyKeyPair &q) const {
+		return p.partial_key_a == q.partial_key_a && p.partial_key_b == q.partial_key_b;
 	}
 };
 
@@ -47,15 +46,15 @@ TEST(CacheTest, MissingValue) {
 TEST(CacheTest1, KeepsAllValuesWithinCapacity) {
     cache::lru_cache<MyKeyPair, MyValue, MyKeyPairMapper, MyKeyPairMapper> cache(TEST2_CACHE_CAPACITY);
 
-    for (int i = 0; i < NUM_OF_TEST2_RECORDS; ++i) {
+    for (int i = 0; i < NUM_OF_TEST_RECORDS; ++i) {
 		cache.put( { i, i*2 }, i+1);
     }
 
-    for (int i = 0; i < NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; ++i) {
+    for (int i = 0; i < NUM_OF_TEST_RECORDS - TEST2_CACHE_CAPACITY; ++i) {
         EXPECT_FALSE(cache.exists({ i, i * 2 }));
     }
 
-    for (int i = NUM_OF_TEST2_RECORDS - TEST2_CACHE_CAPACITY; i < NUM_OF_TEST2_RECORDS; ++i) {
+    for (int i = NUM_OF_TEST_RECORDS - TEST2_CACHE_CAPACITY; i < NUM_OF_TEST_RECORDS; ++i) {
         EXPECT_TRUE(cache.exists({ i, i * 2 }));
         EXPECT_EQ(  i+1, cache.get ( { i, i * 2 } )  );
     }
