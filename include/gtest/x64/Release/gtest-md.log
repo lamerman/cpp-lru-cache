@@ -1,0 +1,15 @@
+﻿Build started 09/10/2015 19:42:38.
+     1>Project "C:\Projects\TurboParser_DN\deps\googletest\msvc\gtest-md.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.. /I..\include /Ic:\externallibs\include /Zi /nologo /W3 /WX- /O2 /D WIN32 /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt "..\src\gtest-all.cc"
+         gtest-all.cc
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1361,5): warning MSB8012: TargetPath(C:\Projects\TurboParser_DN\deps\googletest\msvc\x64\Release\gtest-md.lib) does not match the Library's OutputFile property value (C:\Projects\TurboParser_DN\deps\googletest\msvc\x64\Release\gtest.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1363,5): warning MSB8012: TargetName(gtest-md) does not match the Library's OutputFile property value (gtest). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\Lib.exe /OUT:"C:\Projects\TurboParser_DN\deps\googletest\msvc\x64\Release\gtest.lib" /NOLOGO /MACHINE:X64 "x64\Release\gtest-all.obj"
+         gtest-md.vcxproj -> C:\Projects\TurboParser_DN\deps\googletest\msvc\x64\Release\gtest-md.lib
+     1>Done Building Project "C:\Projects\TurboParser_DN\deps\googletest\msvc\gtest-md.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.12
