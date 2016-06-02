@@ -9,3 +9,33 @@ build
 
 cpp-lru-cache-test
 obj-x86_64-linux-gnu/
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+# Precompiled Headers
+*.gch
+*.pch
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+# Executables
+*.exe
+*.out
+*.app
+MVS_LRU_Cache/*/x64
+MVS_LRU_Cache/x64/*
+MVS_LRU_Cache/*/x64
+MVS_LRU_Cache/x64/*
+MVS_LRU_Cache/*/Debug
+MVS_LRU_Cache/Debug/*
+MVS_LRU_Cache/*/Release
+MVS_LRU_Cache/Release/*

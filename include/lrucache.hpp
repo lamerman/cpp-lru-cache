@@ -12,10 +12,14 @@
 #include <list>
 #include <cstddef>
 #include <stdexcept>
+#include <functional>
 
 namespace cache {
 
-template<typename key_t, typename value_t>
+template<class key_t,
+		 class value_t,
+	 	 class _Hasher = std::hash<key_t>,
+		 class _Keyeq = std::equal_to< key_t> >
 class lru_cache {
 public:
 	typedef typename std::pair<key_t, value_t> key_value_pair_t;
@@ -23,6 +27,10 @@ public:
 
 	lru_cache(size_t max_size) :
 		_max_size(max_size) {
+	}
+
+	void set_cache_size(size_t max_size) {
+		_max_size = max_size;
 	}
 	
 	void put(const key_t& key, const value_t& value) {
@@ -62,7 +70,7 @@ public:
 	
 private:
 	std::list<key_value_pair_t> _cache_items_list;
-	std::unordered_map<key_t, list_iterator_t> _cache_items_map;
+	std::unordered_map<key_t, list_iterator_t, _Hasher, _Keyeq> _cache_items_map;
 	size_t _max_size;
 };
 
