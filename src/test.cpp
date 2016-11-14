@@ -1,4 +1,4 @@
-#include "lrucache.hpp"
+#include "../include/lrucache.hpp"
 #include "gtest/gtest.h"
 
 const int NUM_OF_TEST1_RECORDS = 100;
