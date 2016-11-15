@@ -2,11 +2,22 @@ language: cpp
 
 compiler:
     - gcc
+
+addons:
+  apt:
+    packages:
+      - libunittest++-dev
   
 script: 
     - mkdir build
     - cd build
     - cmake ..
+    - make check
+    - cd ..
+    - sh autogen.sh
+    - mkdir autotools_build
+    - cd autotools_build
+    - sh ../configure
     - make check
 
 notifications:

@@ -1,8 +1,8 @@
 include_HEADERS = include/lrucache.hpp
 
-TESTS               = test
+TESTS               = unit_test
 check_PROGRAMS      = unit_test
 
-unit_test_SOURCES   = src/test.cpp
-unit_test_CXXFLAGS  = -std=c++11 -pthread
-unit_test_LDADD     = -lgtest 
+unit_test_SOURCES   = src/unittest++_test.cpp
+unit_test_CXXFLAGS  = -std=c++0x -pthread
+unit_test_LDADD     = -lUnitTest++
