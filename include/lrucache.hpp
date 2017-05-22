@@ -66,7 +66,7 @@ private:
 	size_t _max_size;
 };
 
-} // namespace lru
+} // namespace cache
 
 #endif	/* _LRUCACHE_HPP_INCLUDED_ */
 
