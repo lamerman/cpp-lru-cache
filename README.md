@@ -9,11 +9,13 @@ Example:
 ```
 /**Creates cache with maximum size of three. When the 
    size in achieved every next element will replace the 
-   least recently used one */
-cache::lru_cache<std::string, std::string> cache(3);
+   least recently used one and returns it*/
+cache::lru_cache<std::string, std::string> cache(2);
+std::pair<std::string, std::string> lru_item;
 
-cache.put("one", "one");
-cache.put("two", "two");
+cache.put("one", "one", lru_item);
+cache.put("two", "two", lru_item);
+cache.put("three", "three", lru_item); //lru_item here contains "one" --> "one"
 
 const std::string& from_cache = cache.get("two")
 

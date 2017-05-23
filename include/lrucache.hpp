@@ -25,7 +25,8 @@ public:
 		_max_size(max_size) {
 	}
 	
-	void put(const key_t& key, const value_t& value) {
+	bool put(const key_t& key, const value_t& value, std::pair<key_t, value_t>& lru_item) {
+		bool is_lru_item_removed = false;
 		auto it = _cache_items_map.find(key);
 		_cache_items_list.push_front(key_value_pair_t(key, value));
 		if (it != _cache_items_map.end()) {
@@ -38,8 +39,11 @@ public:
 			auto last = _cache_items_list.end();
 			last--;
 			_cache_items_map.erase(last->first);
+			lru_item = _cache_items_list.back();
+			is_lru_item_removed = true;
 			_cache_items_list.pop_back();
 		}
+		return is_lru_item_removed;
 	}
 	
 	const value_t& get(const key_t& key) {
