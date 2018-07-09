@@ -25,9 +25,9 @@ public:
 		_max_size(max_size) {
 	}
 	
-	void put(const key_t& key, const value_t& value) {
+	void put(const key_t& key, value_t value) {
 		auto it = _cache_items_map.find(key);
-		_cache_items_list.push_front(key_value_pair_t(key, value));
+		_cache_items_list.push_front(key_value_pair_t(key, std::move(value)));
 		if (it != _cache_items_map.end()) {
 			_cache_items_list.erase(it->second);
 			_cache_items_map.erase(it);
