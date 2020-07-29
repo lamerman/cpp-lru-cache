@@ -56,10 +56,15 @@ public:
 		return _cache_items_map.find(key) != _cache_items_map.end();
 	}
 	
-	size_t size() const {
+	size_t size() const noexcept {
 		return _cache_items_map.size();
 	}
 	
+	void clear() noexcept {
+		_cache_items_map.clear();
+		_cache_items_list.clear();
+	}
+
 private:
 	std::list<key_value_pair_t> _cache_items_list;
 	std::unordered_map<key_t, list_iterator_t> _cache_items_map;
